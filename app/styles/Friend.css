@@ -5,6 +5,7 @@
 .friendName {
   font-weight: 800;
   font-size: 1.35em;
+  cursor: pointer;
 }
 
 .friendMostRecentTrack {

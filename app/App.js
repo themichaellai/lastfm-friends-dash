@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchFriends } from './actions';
+import {
+  fetchFriends,
+  fetchLatestTracks,
+} from './actions';
 
 import { UserType } from './types';
 
@@ -33,6 +36,10 @@ const App = React.createClass({
     this.props.dispatch(fetchFriends(this.refs.usernameInput.value));
   },
 
+  handleFriendClick(username) {
+    this.props.dispatch(fetchLatestTracks(username));
+  },
+
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       this.getFriends();
@@ -55,7 +62,9 @@ const App = React.createClass({
             Go
           </button>
         </div>
-        <Friends friends={this.props.friends} />
+        <Friends
+          friends={this.props.friends}
+          handleFriendClick={this.handleFriendClick} />
       </div>
     );
   },

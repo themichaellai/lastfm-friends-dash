@@ -5,7 +5,12 @@ import Friend from './Friend';
 import styles from '../styles/Friends.css';
 
 const Friends = (props) => {
-  const friends = props.friends.map((f) => <Friend friend={f} key={f.name} />);
+  const friends = props.friends.map((f) => (
+    <Friend
+      friend={f}
+      key={f.name}
+      {...props} />
+  ));
   return (
     <div className={styles.friends}>
       {friends}
