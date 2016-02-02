@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { Map, List } from 'immutable';
+import { List } from 'immutable';
 
 import {
   GET_FRIENDS,
@@ -15,9 +15,8 @@ const friends = function(state, action) {
     default:
       if (state === undefined) {
         return List();
-      } else {
-        return state;
       }
+      return state;
   }
 };
 

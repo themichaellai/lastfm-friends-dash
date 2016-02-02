@@ -2,17 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchFriends } from './actions';
 
+import { UserType } from './types';
+
 import Friends from './components/Friends';
 
 import styles from './styles/App.css';
 
 const App = React.createClass({
   propTypes: {
+    friends: React.PropTypes.arrayOf(UserType),
+    dispatch: React.PropTypes.func.isRequired,
     username: React.PropTypes.string,
   },
 
   getDefaultProps() {
     return {
+      friends: [],
       username: '',
     };
   },
@@ -35,9 +40,6 @@ const App = React.createClass({
   },
 
   render() {
-    const friends = this.props.friends.map((f, i) => {
-      return <li key={i}>{f.name}</li>
-    });
     return (
       <div>
         <div className={styles.usernameInput}>

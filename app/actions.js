@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import { parseLatestTrack } from './types';
 import { LAST_FM_API_KEY } from './secrets';
 export const GET_FRIENDS = 'GET_FRIENDS';
@@ -17,22 +18,24 @@ export const recieveFriends = function(username, friends) {
 };
 
 const friendsUrl = function(username) {
-  return `http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=${username}&api_key=${LAST_FM_API_KEY}&format=json&recentTracks=1`
-}
+  return `http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=${username}&api_key=${LAST_FM_API_KEY}&format=json&recentTracks=1`;
+};
 
 export const fetchFriends = function(username) {
   return function(dispatch) {
     return fetch(friendsUrl(username))
       .then(res => res.json())
       .then(json => {
-        json.friends.user.forEach((user) => {
+        const users = json.friends.user.map((user) => {
+          let tracks;
           if (user.recenttrack === undefined) {
-            user.tracks = [];
+            tracks = [];
           } else {
-            user.tracks = [parseLatestTrack(user.recenttrack)];
+            tracks = [parseLatestTrack(user.recenttrack)];
           }
+          return _.extend(user, { tracks });
         });
-        dispatch(recieveFriends(username, json.friends.user));
+        dispatch(recieveFriends(username, users));
       });
   };
 };

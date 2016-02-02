@@ -3,10 +3,10 @@ import _ from 'underscore';
 
 import styles from '../styles/Friend.css';
 
-const Friend = ({friend}) => {
+const Friend = ({ friend }) => {
   let trackEl = null;
   if (friend.tracks.length > 0) {
-    const track = _.first(friend.tracks)
+    const track = _.first(friend.tracks);
     trackEl = (
       <div className={styles.friendMostRecentTrack}>
         {track.name} by {track.artist.name}
