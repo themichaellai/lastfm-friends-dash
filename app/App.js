@@ -46,6 +46,7 @@ const App = React.createClass({
           <input
               type="text"
               ref="usernameInput"
+              className={styles.usernameInputInput}
               onKeyPress={this.handleKeyPress}>
             </input>
           <button

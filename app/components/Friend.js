@@ -9,7 +9,9 @@ const Friend = ({ friend }) => {
     const track = _.first(friend.tracks);
     trackEl = (
       <div className={styles.friendMostRecentTrack}>
-        {track.name} by {track.artist.name}
+        <a href={track.url}>
+          {track.name} by {track.artist.name}
+        </a>
       </div>
     );
   }

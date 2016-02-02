@@ -13,7 +13,7 @@ export const TrackType = React.PropTypes.shape({
 
 export const UserType = React.PropTypes.shape({
   name: React.PropTypes.string.isRequired,
-  realname: React.PropTypes.string.isRequired,
+  realname: React.PropTypes.string,
   url: React.PropTypes.string.isRequired,
   tracks: React.PropTypes.arrayOf(TrackType).isRequired,
 });
