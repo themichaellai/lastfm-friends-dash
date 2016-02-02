@@ -1,0 +1,43 @@
+{
+    "rules": {
+        "func-names": 0,
+        "id-length": 0,
+        "indent": [
+            2,
+            2,
+            {"SwitchCase": 1}
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "new-cap": 0,
+        "quotes": [
+            2,
+            "single"
+        ],
+        "react/jsx-closing-bracket-location": 0,
+        "react/jsx-indent-props": 0,
+        "react/prefer-es6-class": 0,
+        "semi": [
+            2,
+            "always"
+        ],
+        "space-before-function-paren": [
+          2,
+          "never"
+        ]
+    },
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": "airbnb",
+    "ecmaFeatures": {
+        "jsx": true,
+        "experimentalObjectRestSpread": true
+    },
+    "plugins": [
+        "react"
+    ]
+}
