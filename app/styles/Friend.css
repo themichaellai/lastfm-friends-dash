@@ -1,0 +1,12 @@
+.friendRow {
+  margin-bottom: 10px;
+}
+
+.friendName {
+  font-weight: 800;
+  font-size: 1.35em;
+}
+
+.friendMostRecentTrack {
+  font-size: 0.9em;
+}

@@ -1,0 +1,11 @@
+body {
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.usernameInput {
+  margin-bottom: 4px;
+}
+
+.usernameInputButton {
+  margin-left: 3px;
+}

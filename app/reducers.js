@@ -1,12 +1,17 @@
 import { combineReducers } from 'redux';
 import { Map, List } from 'immutable';
 
-import { GET_FRIENDS } from './actions';
+import {
+  GET_FRIENDS,
+  RECIEVE_FRIENDS,
+} from './actions';
 
 const friends = function(state, action) {
   switch (action.type) {
     case GET_FRIENDS:
-      return state.push({name: 'michael'})
+      return state;
+    case RECIEVE_FRIENDS:
+      return List.of(...action.friends);
     default:
       if (state === undefined) {
         return List();
