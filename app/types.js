@@ -49,6 +49,6 @@ export const parseTrack = function(track) {
       name: track.artist['#text'],
     },
     epoch: _.has(track, 'date') ? track.date.uts : undefined,
-    nowPlaying: _.has(track, '@attr') ? track['@attr'].nowplaying : false,
+    nowPlaying: _.has(track, '@attr') ? track['@attr'].nowplaying === 'true' : false,
   };
 };

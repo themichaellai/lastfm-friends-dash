@@ -9,4 +9,9 @@
 }
 
 .trackDetails {
+  font-size: 0.8em;
+}
+
+.timeAgo {
+  margin-left: 10px;
 }
