@@ -9,6 +9,7 @@ export const TrackType = React.PropTypes.shape({
   artist: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
   }),
+  epoch: React.PropTypes.string.isRequired,
 });
 
 export const UserType = React.PropTypes.shape({
@@ -29,6 +30,7 @@ export const parseLatestTrack = function(track) {
     artist: {
       name: track.artist.name,
     },
+    epoch: track['@attr'].uts,
   };
 };
 
@@ -43,5 +45,6 @@ export const parseTrack = function(track) {
     artist: {
       name: track.artist['#text'],
     },
+    epoch: track.date.uts,
   };
 };

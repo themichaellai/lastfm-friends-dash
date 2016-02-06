@@ -1,4 +1,10 @@
 .tracks {
-  padding-left: 20px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-left: 0px;
   margin-top: 0px;
+  max-width: 300px;
+  overflow: hidden;
 }

@@ -1,13 +1,16 @@
 import React from 'react';
+
 import { TrackType } from '../types';
+
+import Track from './Track';
 
 import styles from '../styles/Tracks.css';
 
-const Tracks = (props) => {
-  const trackEls = props.tracks.map((t) => (
-    <li>
-      <a href={t.url}>{t.artist.name} - {t.name}</a>
-    </li>
+const Tracks = ({tracks}) => {
+  const trackEls = tracks.slice(0, 20).map((t) => (
+    <Track
+      key={t.epoch + t.name}
+      track={t} />
   ));
   return (
     <ul className={styles.tracks}>
