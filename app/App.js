@@ -45,7 +45,9 @@ const App = React.createClass({
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
+      const username = this.refs.usernameInput.value;
       this.getFriends();
+      window.history.pushState(username, username, `/?username=${username}&`);
     }
   },
 
