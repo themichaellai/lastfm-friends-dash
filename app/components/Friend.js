@@ -1,8 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
 
-import Tracks from './Tracks';
-
 import styles from '../styles/Friend.css';
 
 const Friend = React.createClass({
@@ -17,29 +15,15 @@ const Friend = React.createClass({
     };
   },
 
-  getInitialState() {
-    return {
-      expanded: false,
-    };
-  },
-
   handleFriendClick() {
-    // TODO: move this to state atom
-    const friend = this.props.friend;
-    if (friend.tracks.length > 1) {
-      this.setState({ expanded: !this.state.expanded });
-    } else {
-      this.props.handleFriendClick(friend.name);
-      this.setState({ expanded: true });
-    }
+    this.props.handleFriendClick(this.props.friend.name);
   },
 
   render() {
     const { friend } = this.props;
     const tracks = friend.tracks;
     let trackEl = null;
-    if (tracks.length === 1 ||
-        (tracks.length > 1 && !this.state.expanded)) {
+    if (tracks.length >= 1) {
       const track = _.first(tracks);
       trackEl = (
         <div className={styles.friendMostRecentTrack}>
@@ -48,8 +32,6 @@ const Friend = React.createClass({
           </a>
         </div>
       );
-    } else if (tracks.length > 1 && this.state.expanded) {
-      trackEl = <Tracks tracks={tracks} />;
     }
     return (
       <div className={styles.friendRow}>

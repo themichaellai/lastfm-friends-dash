@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 import {
   fetchFriends,
   fetchLatestTracks,
-} from './actions';
-
-import { UserType } from './types';
+} from './actions/last-fm';
 
 import Friends from './components/Friends';
+import Tracks from './components/Tracks';
 
 import styles from './styles/App.css';
 
 const App = React.createClass({
   propTypes: {
-    friends: React.PropTypes.arrayOf(UserType),
+    friends: React.PropTypes.object.isRequired,
+    friendsOrder: React.PropTypes.array.isRequired,
+    uiState: React.PropTypes.shape({
+      selectedFriend: React.PropTypes.string,
+    }),
     dispatch: React.PropTypes.func.isRequired,
     username: React.PropTypes.string,
   },
@@ -46,25 +49,38 @@ const App = React.createClass({
     }
   },
 
+  renderTracks() {
+    const { uiState, friends } = this.props;
+    if (uiState.selectedFriend) {
+      return <Tracks tracks={friends[uiState.selectedFriend].tracks} />;
+    }
+  },
+
   render() {
     return (
-      <div>
-        <div className={styles.usernameInput}>
-          <input
-              type="text"
-              ref="usernameInput"
-              className={styles.usernameInputInput}
-              onKeyPress={this.handleKeyPress}>
-            </input>
-          <button
-              className={styles.usernameInputButton}
-              onClick={this.getFriends}>
-            Go
-          </button>
+      <div className={styles.main}>
+        <div>
+          <div className={styles.usernameInput}>
+            <input
+                type="text"
+                ref="usernameInput"
+                className={styles.usernameInputInput}
+                onKeyPress={this.handleKeyPress}>
+              </input>
+            <button
+                className={styles.usernameInputButton}
+                onClick={this.getFriends}>
+              Go
+            </button>
+          </div>
+          <Friends
+            friends={this.props.friends}
+            friendsOrder={this.props.friendsOrder}
+            handleFriendClick={this.handleFriendClick} />
         </div>
-        <Friends
-          friends={this.props.friends}
-          handleFriendClick={this.handleFriendClick} />
+        <div>
+          {this.renderTracks()}
+        </div>
       </div>
     );
   },
@@ -72,7 +88,9 @@ const App = React.createClass({
 
 const select = function(state) {
   return {
-    friends: state.friends.toJS(),
+    friends: state.friends.get('friends').toJS(),
+    friendsOrder: state.friends.get('friendsOrder').toJS(),
+    uiState: state.uiState.toJS(),
   };
 };
 

@@ -1,7 +1,10 @@
 import _ from 'underscore';
 import Immutable from 'immutable';
-import { parseLatestTrack, parseTrack } from './types';
-import { LAST_FM_API_KEY } from './secrets';
+import { parseLatestTrack, parseTrack } from '../types';
+import { LAST_FM_API_KEY } from '../secrets';
+
+import { selectFriend } from './ui-state';
+
 export const GET_FRIENDS = 'GET_FRIENDS';
 export const getFriends = function() {
   return {
@@ -10,11 +13,12 @@ export const getFriends = function() {
 };
 
 export const RECIEVE_FRIENDS = 'RECIEVE_FRIENDS';
-export const recieveFriends = function(username, friends) {
+export const recieveFriends = function(username, friends, friendsOrder) {
   return {
     type: RECIEVE_FRIENDS,
     username,
     friends,
+    friendsOrder,
   };
 };
 
@@ -51,18 +55,30 @@ export const fetchFriends = function(username) {
         })
       ))
       .then(users => {
-        dispatch(recieveFriends(username, Immutable.fromJS(users)));
+        const usernameOrder = users.map((u) => u.name);
+        const userMap = _.object(users.map((u) => [u.name, u]));
+        dispatch(recieveFriends(username,
+                                Immutable.fromJS(userMap),
+                                Immutable.fromJS(usernameOrder)));
       });
   };
 };
 
+const shouldFetchLatestTracks = function(state, username) {
+  // TODO: make more robust
+  return state.friends.getIn(['friends', username, 'tracks']).size < 2;
+};
+
 export const fetchLatestTracks = function(username) {
-  return function(dispatch) {
-    return fetch(recentTracksUrl(username))
-      .then(res => res.json())
-      .then(json => {
-        const tracks = json.recenttracks.track.map(parseTrack);
-        dispatch(recieveRecentTracks(username, tracks));
-      });
+  return function(dispatch, getState) {
+    dispatch(selectFriend(username));
+    if (shouldFetchLatestTracks(getState(), username)) {
+      return fetch(recentTracksUrl(username))
+        .then(res => res.json())
+        .then(json => {
+          const tracks = json.recenttracks.track.map(parseTrack);
+          dispatch(recieveRecentTracks(username, tracks));
+        });
+    }
   };
 };

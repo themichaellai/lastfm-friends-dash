@@ -6,9 +6,21 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
-  entry: [
-    path.join(__dirname, 'app/main.js')
-  ],
+  entry: {
+    app: path.join(__dirname, 'app/main.js'),
+    vendor: [
+      'immutable',
+      'moment',
+      'query-string',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'redux',
+      'redux-thunk',
+      'underscore',
+    ],
+  },
   output: {
     path: path.join(__dirname, '/dist/'),
     filename: '[name].js',
@@ -27,6 +39,7 @@ module.exports = {
         warnings: false,
       },
     }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     })

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 
 export const TrackType = React.PropTypes.shape({
   name: React.PropTypes.string.isRequired,
@@ -9,7 +10,8 @@ export const TrackType = React.PropTypes.shape({
   artist: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
   }),
-  epoch: React.PropTypes.string.isRequired,
+  epoch: React.PropTypes.string,
+  nowPlaying: React.PropTypes.bool.isRequired,
 });
 
 export const UserType = React.PropTypes.shape({
@@ -30,7 +32,8 @@ export const parseLatestTrack = function(track) {
     artist: {
       name: track.artist.name,
     },
-    epoch: track['@attr'].uts,
+    epoch: _.has(track, '@attr') ? track['@attr'].uts : undefined,
+    nowPlaying: false,
   };
 };
 
@@ -45,6 +48,7 @@ export const parseTrack = function(track) {
     artist: {
       name: track.artist['#text'],
     },
-    epoch: track.date.uts,
+    epoch: _.has(track, 'date') ? track.date.uts : undefined,
+    nowPlaying: _.has(track, '@attr') ? track['@attr'].nowplaying : false,
   };
 };

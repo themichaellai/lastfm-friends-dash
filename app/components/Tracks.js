@@ -6,7 +6,7 @@ import Track from './Track';
 
 import styles from '../styles/Tracks.css';
 
-const Tracks = ({tracks}) => {
+const Tracks = ({ tracks }) => {
   const trackEls = tracks.slice(0, 20).map((t) => (
     <Track
       key={t.epoch + t.name}
